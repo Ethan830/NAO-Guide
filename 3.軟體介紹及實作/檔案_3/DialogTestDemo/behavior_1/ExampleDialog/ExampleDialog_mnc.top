@@ -1,0 +1,63 @@
+topic: ~ExampleDialog()
+language: mnc
+
+# Defining extra concepts out of words or group of words
+#concept:(hello) [hello hi hey "good morning" greetings]
+
+# Catching inputs and triggering outputs
+#u:(e:onStart) $onStopped=1
+
+# Replying to speech
+#u:(~hello) ~hello
+
+concept:(你好)["您好" "午安" "很高興見到你"]
+concept:(如何) ["你好嗎" "最近怎麼樣" "最近如何" "今天過得如何"]
+concept:(快樂) ["還可以" "還行" "很棒" "不錯" "很不錯" "普通"]
+concept:(難過) ["悲慘" "不快樂" "很糟" "很累" "不好" "不太好"]
+concept:(重複) ["重複" "不懂" "你剛說什麼" "再說一次"]
+concept:(好) [好 "當然" "沒問題" "來吧" "走吧" "很好" "想" "還可以"]
+concept:(不要) ["不要" "不想" "不了" "一點也不想" "沒空" "都不喜歡" "沒辦法"]
+concept:(謝謝) ["謝謝你" "感謝" "謝啦" "感恩"]
+concept:(再見) ["再見" "下次見" "祝你有美好的一天"]
+concept:(天氣) ["早晚溫差大，上午炎熱，溫度約二十七到三十二度間，傍晚溫度約十二到十七度" "風向偏北風，氣溫約在二十八度到三十一度間" "高壓來襲，天氣悶熱，氣溫約在三十度到三十三度左右" "鋒面來襲，氣溫約二十六度到二十八度間，偶有陣雨，外出請記得帶把傘"]
+concept:(問新聞) ["頭條新聞" "重大新聞" "焦點新聞" "頭條" "新聞" "獨家新聞" "今日頭條新聞" "今天有什麼新聞" "今天的新聞是什麼" "重要新聞" "重點新聞"]
+concept:(回新聞) ["銀河系衛生部公布消息，表示地球肆虐的疫情，科學界翹楚nao博士，已掌握能對抗的疫苗，目前已在量產中，預計於下個月分發施打，此舉讓地球成為一個更加適合的生存環境" "外星人攻占地球，引爆宇宙大戰，nao將軍帶領千萬大軍，擊敗外星人艦隊，守護美麗的地球" "國際巨星nao大明星，擔任今年度國際親善大使，為全球海洋生態宣導環保與永續，並捐款兩億支持各大環保團體。" "太空員Nao發現邪惡外星人正在攻打奇妙星球，當下立刻幫助奇妙星球打跑邪惡外星人，拯救奇妙星球上的生物，此英勇行為得到太空總署表揚，舉國歡騰"]
+concept:(退出) ["退出程式" "退出"]
+
+u:(e: onStart) 你好，我是NAO
+
+u:(~你好) ^start(animations/Stand/Gestures/Hey_3) ~你好 ^wait(animations/Stand/Gestures/Hey_3) ^gotoReactivate(如何)
+
+u:(~如何) ^startTag(myself) 還不錯，謝謝你。 ^gotoReactivate(如何)
+
+proposal: %如何 ^startTag(show) 你今天過得好嗎?
+    u1:(~快樂) 我很開心你今天過得很棒! ^gotoReactivate(逛街)
+    u1:(~難過) 這樣啊 我也替你感到難過 ^nextProposal
+    u1:(~重複) 好 我再重複一次問題 ^sameProposal
+
+proposal: 還是我們聊些別的事? ^nextProposal
+proposal: %逛街 你明天想去逛街嗎?
+    u1:(~好) 那我們明天一起去逛街吧! ^gotoReactivate(喜歡的顏色)
+    u1:(~不要) 好，等你想去都可以來找我^gotoReactivate(喜歡的顏色)
+
+proposal: %喜歡的顏色 你喜歡藍色還是紅色 ?
+    u1:(黃色) 黃色也是我最喜歡的顏色 ! ^gotoReactivate(下次聊吧)
+    u1:(_[藍色 紅色]) $1 是非常棒的顏色。但我最喜歡的是黃色。 ^gotoReactivate(下次聊吧)
+    u1:(_[綠色 紫色 粉紅色 橘色 白色 灰色 黑色]) $1 是很不錯的顏色呢 但我還是想知道 ^sameProposal
+
+proposal: %下次聊吧 今天很開心能跟你聊天呢 最後要不要來玩個遊戲呢?
+    u1:(~好)那我們開始吧!$playgame2=2    
+    u1:(~再見) ~再見 $onStopped=1
+    u1:(~不要) 那也是祝您有美好的一天!$onStopped=1
+
+u:({台北}天氣{如何})~天氣
+
+u:(~問新聞)~回新聞 。上述內容純屬虛構，僅為博君一笑，如有雷同純屬巧合。小機器人還沒有學會查詢功能，若搭配連網聊天功能軟體，我會更加聰明唷!
+
+u:(~重複) 好 我再重複一次問題 ^sameProposal
+
+u:(~謝謝) 不客氣
+
+u:(~退出) 好的~退出 $onStopped=1
+
+u:(e:LeftBumperPressed) ^start(animations/Stand/Gestures/YouKnowWhat_1) 我的左腳好像碰到東西了! ^wait(animations/Stand/Gestures/YouKnowWhat_1)

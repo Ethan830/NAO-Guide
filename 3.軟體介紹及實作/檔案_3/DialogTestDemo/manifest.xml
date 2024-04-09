@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package version="0.0.0" uuid="dialogtestdemo-d0c8e7">
+ <names>
+  <name lang="en_US">DialogTestDemo</name>
+ </names>
+ <supportedLanguages>
+  <language>en_US</language>
+  <language>zh_CN</language>
+ </supportedLanguages>
+ <descriptionLanguages>
+  <language>en_US</language>
+  <language>zh_CN</language>
+ </descriptionLanguages>
+ <contents>
+  <behaviorContent path="behavior_1">
+   <userRequestable/>
+   <nature>interactive</nature>
+   <names>
+    <name lang="en_US">聊天範例</name>
+    <name lang="zh_CN">聊天範例</name>
+   </names>
+   <triggerSentences>
+    <sentence lang="zh_CN">聊天範例</sentence>
+    <sentence lang="zh_CN">對話範例</sentence>
+   </triggerSentences>
+   <permissions/>
+  </behaviorContent>
+ </contents>
+</package>
